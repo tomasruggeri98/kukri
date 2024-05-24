@@ -19,7 +19,7 @@ public class SlimeController : MonoBehaviour
     {
         if (other.CompareTag("Proyectil"))
         {
-            Debug.Log("hola");
+            
             // Obtener el daño del proyectil y causarlo al slime
             Projectile projectile = other.GetComponent<Projectile>();
             if (projectile != null)
@@ -30,7 +30,7 @@ public class SlimeController : MonoBehaviour
 
         if (other.CompareTag("Proyectil"))
         {
-            Debug.Log("hola2");
+            
             // Obtener el daño del proyectil y causarlo al slime
             ProjectilElement ProjectileElement = other.GetComponent<ProjectilElement>();
             if (ProjectileElement != null)

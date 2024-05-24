@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement2D : MonoBehaviour
 {
-    // Referencia al Rigidbody2D del jugador
-    private Rigidbody2D rb2d;
-    private Animator playerAnimator;
-
     public float speed = 5f;
     public GameObject projectilePrefab;
     public Transform firePoint;
 
     private Vector2 moveDirection;
+    private Vector2 lastMoveDirection;
+    private Animator playerAnimator;
 
     void Start()
     {
-        // Obtener el componente Rigidbody2D del jugador
-        rb2d = GetComponent<Rigidbody2D>();
         playerAnimator = GetComponent<Animator>();
     }
 
@@ -27,6 +23,12 @@ public class PlayerMovement2D : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
         moveDirection = new Vector2(moveX, moveY).normalized;
+
+        if (moveDirection != Vector2.zero)
+        {
+            lastMoveDirection = moveDirection;
+        }
+
         transform.position += (Vector3)(moveDirection * speed * Time.deltaTime);
 
         // Disparar proyectil
@@ -43,17 +45,13 @@ public class PlayerMovement2D : MonoBehaviour
 
     void Shoot()
     {
-        // Instanciar el proyectil
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
 
         if (projectileScript != null)
         {
-            projectileScript.SetDirection(moveDirection);
+            // Usa la última dirección de movimiento si el jugador está quieto
+            projectileScript.SetDirection(lastMoveDirection != Vector2.zero ? lastMoveDirection : Vector2.right); // Default direction if no movement
         }
-
-        // Rotar el proyectil en la dirección del movimiento
-        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-        projectile.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 180f));
     }
 }

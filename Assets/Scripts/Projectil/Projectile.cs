@@ -4,13 +4,17 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 10f;
     public float lifetime = 1.5f;
-    public int damage = 1; 
+    public int damage = 1;
 
     private Vector2 moveDirection;
 
     public void SetDirection(Vector2 direction)
     {
         moveDirection = direction.normalized;
+
+        // Ajustar la rotación del proyectil para que apunte en la dirección del movimiento
+        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // Ajuste de ángulo si el sprite está orientado hacia la derecha por defecto
     }
 
     void Update()
@@ -25,4 +29,6 @@ public class Projectile : MonoBehaviour
         }
     }
 }
+
+
 
