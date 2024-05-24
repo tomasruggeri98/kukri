@@ -3,7 +3,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed = 10f;
-    public float lifetime = 1.5f; // Duración de vida del proyectil
+    public float lifetime = 1.5f;
+    public int damage = 1; 
 
     private Vector2 moveDirection;
 
