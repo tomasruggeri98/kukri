@@ -8,15 +8,24 @@ public class EnemySpawner : MonoBehaviour
     public Transform[] spawnPoints; // Puntos de generación de enemigos
     public float minSpawnTime = 1f; // Tiempo mínimo de generación
     public float maxSpawnTime = 3f; // Tiempo máximo de generación
+    public float maxSpawnSpeedup = 1f; // Velocidad máxima de aumento del spawn
     public Transform player; // Referencia al jugador
+
+    private float currentSpawnTime; // Tiempo actual de generación
+    private float spawnSpeedupIncrement; // Incremento de la velocidad de spawn
 
     private void Start()
     {
+        // Iniciar la generación de enemigos
         StartSpawning();
     }
 
     void StartSpawning()
     {
+        // Calcular el incremento de la velocidad de spawn
+        spawnSpeedupIncrement = (maxSpawnTime - minSpawnTime) / maxSpawnSpeedup;
+
+        // Iniciar la corrutina de spawn de enemigos
         StartCoroutine(SpawnEnemy());
     }
 
@@ -24,8 +33,8 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            // Esperar un tiempo aleatorio entre minSpawnTime y maxSpawnTime
-            float spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
+            // Esperar un tiempo aleatorio entre minSpawnTime y currentSpawnTime
+            float spawnTime = Random.Range(minSpawnTime, currentSpawnTime);
             yield return new WaitForSeconds(spawnTime);
 
             // Generar un enemigo en uno de los puntos de generación aleatorios
@@ -37,6 +46,16 @@ public class EnemySpawner : MonoBehaviour
             if (enemyScript != null)
             {
                 enemyScript.SetPlayer(player);
+            }
+
+            // Aumentar gradualmente la velocidad de spawn hasta el máximo
+            if (currentSpawnTime > maxSpawnTime)
+            {
+                currentSpawnTime -= spawnSpeedupIncrement;
+            }
+            else
+            {
+                currentSpawnTime = maxSpawnTime;
             }
         }
     }

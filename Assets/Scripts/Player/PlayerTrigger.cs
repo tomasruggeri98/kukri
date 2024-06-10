@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerTrigger : MonoBehaviour
 {
@@ -13,5 +14,14 @@ public class PlayerTrigger : MonoBehaviour
             
             orbitingBalls.ActivateBalls();
         }
+
+
+        if (other.CompareTag("Enemy"))
+        {
+            SceneManager.LoadScene("Menu"); // Cargar la escena del menú
+        }
     }
+
+
+
 }

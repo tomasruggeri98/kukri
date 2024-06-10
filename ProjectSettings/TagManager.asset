@@ -8,6 +8,7 @@ TagManager:
   - Activator
   - Proyectil
   - Enemy
+  - Proyectil1
   layers:
   - Default
   - TransparentFX

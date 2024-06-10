@@ -6,8 +6,9 @@ public class SlimeController : MonoBehaviour
 {
     public int maxHealth = 100; // Vida máxima del slime
     private int currentHealth;   // Vida actual del slime
-
     
+
+
 
     void Start()
     {
@@ -28,7 +29,7 @@ public class SlimeController : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("Proyectil"))
+        if (other.CompareTag("Proyectil1"))
         {
             
             // Obtener el daño del proyectil y causarlo al slime
@@ -58,7 +59,11 @@ public class SlimeController : MonoBehaviour
     // Método para manejar la muerte del slime
     void Die()
     {
-        // Desaparecer o cualquier otra acción cuando el slime muere
+        
+        
+        
+        
+
         Destroy(gameObject);
     }
 }
