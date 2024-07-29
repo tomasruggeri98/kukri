@@ -3,7 +3,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed = 10f;
-    public float lifetime = 1.5f;
+    public float lifetime = 0.3f; // Ajusta el tiempo de vida a 0.3 segundos
     public int damage = 1;
     public GameObject impactEffect; // Referencia al efecto de impacto
 
@@ -18,16 +18,15 @@ public class Projectile : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // Ajuste de ángulo si el sprite está orientado hacia la derecha por defecto
     }
 
+    void Start()
+    {
+        // Programar la destrucción del proyectil después de 0.3 segundos
+        Destroy(gameObject, lifetime);
+    }
+
     void Update()
     {
         transform.position += (Vector3)(moveDirection * speed * Time.deltaTime);
-
-        // Destruye el proyectil después de un tiempo
-        lifetime -= Time.deltaTime;
-        if (lifetime <= 0f)
-        {
-            DestroyProjectile();
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -54,8 +53,3 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject);
     }
 }
-
-
-
-
-

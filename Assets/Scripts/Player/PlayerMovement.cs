@@ -7,10 +7,12 @@ public class PlayerMovement2D : MonoBehaviour
     public float speed = 5f;
     public GameObject projectilePrefab;
     public Transform firePoint;
+    public float fireRate = 0.2f; // Intervalo de tiempo entre disparos
 
     private Vector2 moveDirection;
     private Vector2 lastMoveDirection;
     private Animator playerAnimator;
+    private float nextFireTime = 0f; // Tiempo del próximo disparo permitido
 
     // Limites del mapa
     private Vector2 minBounds = new Vector2(-67f, -35f);
@@ -43,16 +45,29 @@ public class PlayerMovement2D : MonoBehaviour
         // Aplicar la nueva posición al transform
         transform.position = newPosition;
 
+        // Actualizar la dirección del punto de disparo
+        UpdateFirePointDirection();
+
         // Disparar proyectil
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKey(KeyCode.Alpha1) && Time.time >= nextFireTime)
         {
             Shoot();
+            nextFireTime = Time.time + fireRate; // Actualizar el tiempo del próximo disparo permitido
         }
 
         // Actualizar animaciones
         playerAnimator.SetFloat("horizontal", moveX);
         playerAnimator.SetFloat("vertical", moveY);
         playerAnimator.SetFloat("speed", moveDirection.sqrMagnitude);
+    }
+
+    void UpdateFirePointDirection()
+    {
+        if (lastMoveDirection != Vector2.zero)
+        {
+            float angle = Mathf.Atan2(lastMoveDirection.y, lastMoveDirection.x) * Mathf.Rad2Deg;
+            firePoint.rotation = Quaternion.Euler(0, 0, angle);
+        }
     }
 
     void Shoot()
@@ -72,4 +87,5 @@ public class PlayerMovement2D : MonoBehaviour
         speed += amount;
     }
 }
+
 

@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.7095633, y: -1.357238, z: 0}
-  m_LocalScale: {x: -2.101, y: -2.101, z: -2.101}
+  m_LocalScale: {x: -1.06, y: -1.06, z: -1.06}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -121,10 +121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae96b88ea3701a4c9333da02f7c1a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
-  lifetime: 1.5
+  speed: 10
+  lifetime: 2
   damage: 1
-  impactEffect: {fileID: 0}
+  impactEffect: {fileID: 3414863902604837703, guid: e240d99ffb69b6b41870d85b8f47cef2, type: 3}
 --- !u!50 &1998577198681666382
 Rigidbody2D:
   serializedVersion: 4
