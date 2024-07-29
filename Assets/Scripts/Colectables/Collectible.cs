@@ -1,10 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Collectible : MonoBehaviour
+public class CollisionHandler : MonoBehaviour
 {
-    // Este método se llama cuando otro collider entra en el trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Verificar si el collider que entra tiene la etiqueta "Player"

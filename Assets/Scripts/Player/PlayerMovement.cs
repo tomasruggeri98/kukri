@@ -12,6 +12,10 @@ public class PlayerMovement2D : MonoBehaviour
     private Vector2 lastMoveDirection;
     private Animator playerAnimator;
 
+    // Limites del mapa
+    private Vector2 minBounds = new Vector2(-67f, -35f);
+    private Vector2 maxBounds = new Vector2(72f, 34f);
+
     void Start()
     {
         playerAnimator = GetComponent<Animator>();
@@ -29,7 +33,15 @@ public class PlayerMovement2D : MonoBehaviour
             lastMoveDirection = moveDirection;
         }
 
-        transform.position += (Vector3)(moveDirection * speed * Time.deltaTime);
+        // Nueva posición calculada
+        Vector3 newPosition = transform.position + (Vector3)(moveDirection * speed * Time.deltaTime);
+
+        // Limitar la posición del jugador a los límites del mapa
+        newPosition.x = Mathf.Clamp(newPosition.x, minBounds.x, maxBounds.x);
+        newPosition.y = Mathf.Clamp(newPosition.y, minBounds.y, maxBounds.y);
+
+        // Aplicar la nueva posición al transform
+        transform.position = newPosition;
 
         // Disparar proyectil
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -55,3 +67,4 @@ public class PlayerMovement2D : MonoBehaviour
         }
     }
 }
+

@@ -12,7 +12,7 @@ public class PlayerTrigger : MonoBehaviour
         if (other.CompareTag("Activator"))  // Asegúrate de que el objeto activador tenga la etiqueta "Activator"
         {
             
-            orbitingBalls.ActivateBalls();
+            orbitingBalls.ActivateNextBall();
         }
 
 

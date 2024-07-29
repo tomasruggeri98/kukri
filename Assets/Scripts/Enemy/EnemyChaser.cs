@@ -8,6 +8,8 @@ public class EnemyChaser : MonoBehaviour
 
     private Transform player; // Referencia al jugador
     private Vector2 lastDirection; // Última dirección en la que se movió el enemigo
+    private bool isAlive = true; // Indica si el enemigo está vivo
+    private Animator animator; // Referencia al Animator
 
     void Start()
     {
@@ -18,11 +20,14 @@ public class EnemyChaser : MonoBehaviour
         {
             Debug.LogError("No se pudo encontrar al jugador. Asegúrate de que tiene el tag 'Player'.");
         }
+
+        // Obtener referencia al Animator (si está presente)
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (player != null)
+        if (isAlive && player != null)
         {
             // Calcular la dirección hacia el jugador
             Vector2 direction = (player.position - transform.position).normalized;
@@ -48,6 +53,18 @@ public class EnemyChaser : MonoBehaviour
                 // Actualizar la última dirección
                 lastDirection = direction;
             }
+        }
+    }
+
+    // Método para detener el movimiento del enemigo
+    public void StopMovement()
+    {
+        isAlive = false; // Indica que el enemigo está muerto y detener el movimiento
+
+        // Desactivar el Animator si está presente
+        if (animator != null)
+        {
+            animator.enabled = false;
         }
     }
 
