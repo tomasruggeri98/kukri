@@ -63,8 +63,13 @@ public class PlayerMovement2D : MonoBehaviour
         if (projectileScript != null)
         {
             // Usa la última dirección de movimiento si el jugador está quieto
-            projectileScript.SetDirection(lastMoveDirection != Vector2.zero ? lastMoveDirection : Vector2.right); // Default direction if no movement
+            projectileScript.SetDirection(lastMoveDirection != Vector2.zero ? lastMoveDirection : Vector2.right); // Dirección predeterminada si no hay movimiento
         }
+    }
+
+    public void IncreaseSpeed(float amount)
+    {
+        speed += amount;
     }
 }
 
