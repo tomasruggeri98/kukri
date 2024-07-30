@@ -49,7 +49,9 @@ public class PlayerTrigger : MonoBehaviour
         currentHealth -= damage; // Reduce la vida actual
         if (currentHealth <= 0)
         {
+
             currentHealth = 0;
+            PlayerPrefs.SetInt("LastScore", FindObjectOfType<ScoreManager>().GetScore());
             SceneManager.LoadScene("Menu"); // Cargar la escena del menú si se ha quedado sin vida
         }
         UpdateHealthUI(); // Actualiza la UI con la vida restante
