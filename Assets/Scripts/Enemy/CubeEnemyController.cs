@@ -12,6 +12,7 @@ public class CubeEnemyController : MonoBehaviour
 
     public float rotationSpeed = 100f; // Velocidad de rotación del sprite
     public GameObject fireworkPrefab; // Prefab de la animación de explosión
+    public AudioSource deathAudioSource; // AudioSource para la muerte
 
     void Start()
     {
@@ -23,6 +24,8 @@ public class CubeEnemyController : MonoBehaviour
         {
             Debug.LogError("No se pudo encontrar al jugador. Asegúrate de que tiene el tag 'Player'.");
         }
+
+        deathAudioSource = GetComponent<AudioSource>(); // Asegúrate de tener un AudioSource en el objeto
     }
 
     void Update()
@@ -72,11 +75,11 @@ public class CubeEnemyController : MonoBehaviour
 
         if (other.CompareTag("Proyectil1"))
         {
-            // Obtener el daño del proyectil y causarlo al slime
-            ProjectilElement ProjectileElement = other.GetComponent<ProjectilElement>();
-            if (ProjectileElement != null)
+            // Obtener el daño del proyectil y causarlo al cubo
+            ProjectilElement projectileElement = other.GetComponent<ProjectilElement>();
+            if (projectileElement != null)
             {
-                TakeDamage(ProjectileElement.damage);
+                TakeDamage(projectileElement.damage);
             }
         }
     }
@@ -103,6 +106,12 @@ public class CubeEnemyController : MonoBehaviour
 
         // Instanciar la animación de explosión en la posición del cubo
         GameObject firework = Instantiate(fireworkPrefab, transform.position, transform.rotation);
+
+        // Reproducir sonido de muerte
+        if (deathAudioSource != null)
+        {
+            deathAudioSource.Play();
+        }
 
         // Destruir el cubo después de 2 segundos
         StartCoroutine(HandleDeath(firework));

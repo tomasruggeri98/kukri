@@ -8,6 +8,7 @@ public class PlayerMovement2D : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform firePoint;
     public float fireRate = 0.2f; // Intervalo de tiempo entre disparos
+    public AudioSource shootAudioSource; // AudioSource para el disparo
 
     private Vector2 moveDirection;
     private Vector2 lastMoveDirection;
@@ -21,6 +22,7 @@ public class PlayerMovement2D : MonoBehaviour
     void Start()
     {
         playerAnimator = GetComponent<Animator>();
+        shootAudioSource = GetComponent<AudioSource>(); // Asegúrate de tener un AudioSource en el objeto
     }
 
     void Update()
@@ -80,6 +82,12 @@ public class PlayerMovement2D : MonoBehaviour
             // Usa la última dirección de movimiento si el jugador está quieto
             projectileScript.SetDirection(lastMoveDirection != Vector2.zero ? lastMoveDirection : Vector2.right); // Dirección predeterminada si no hay movimiento
         }
+
+        // Reproducir sonido de disparo
+        if (shootAudioSource != null)
+        {
+            shootAudioSource.Play();
+        }
     }
 
     public void IncreaseSpeed(float amount)
@@ -87,5 +95,3 @@ public class PlayerMovement2D : MonoBehaviour
         speed += amount;
     }
 }
-
-

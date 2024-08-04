@@ -6,6 +6,7 @@ public class SlimeController : MonoBehaviour
 {
     public int maxHealth = 100; // Vida máxima del slime
     private int currentHealth;   // Vida actual del slime
+    
 
     private EnemyChaser enemyChaser; // Referencia al script EnemyChaser
     private SpriteRenderer spriteRenderer; // Referencia al SpriteRenderer
@@ -17,6 +18,7 @@ public class SlimeController : MonoBehaviour
         // Obtener referencias a componentes
         enemyChaser = GetComponent<EnemyChaser>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        
     }
 
     // Método para recibir daño
@@ -35,10 +37,10 @@ public class SlimeController : MonoBehaviour
         if (other.CompareTag("Proyectil1"))
         {
             // Obtener el daño del proyectil y causarlo al slime
-            ProjectilElement ProjectileElement = other.GetComponent<ProjectilElement>();
-            if (ProjectileElement != null)
+            ProjectilElement projectileElement = other.GetComponent<ProjectilElement>();
+            if (projectileElement != null)
             {
-                TakeDamage(ProjectileElement.damage);
+                TakeDamage(projectileElement.damage);
             }
         }
     }
@@ -57,31 +59,20 @@ public class SlimeController : MonoBehaviour
     // Método para manejar la muerte del slime
     void Die()
     {
-        // Detener el movimiento del enemigo
+        // Detener el movimiento
         if (enemyChaser != null)
         {
-            enemyChaser.StopMovement();
+            enemyChaser.enabled = false;
         }
 
-        // Hacer el slime invisible
+        // Desactivar el SpriteRenderer para hacer invisible al slime
         if (spriteRenderer != null)
         {
             spriteRenderer.enabled = false;
         }
 
 
-        // Iniciar la coroutine para manejar la muerte con retraso
-        StartCoroutine(HandleDeath());
-    }
-
-    // Coroutine para manejar la muerte con retraso
-    IEnumerator HandleDeath()
-    {
-        // Esperar 2 segundos
-        yield return new WaitForSeconds(2f);
-
-        // Destruir el slime
-        Destroy(gameObject);
+        // Destruir el objeto después de 0.6 segundos
+        Destroy(gameObject, 0.6f);
     }
 }
-
